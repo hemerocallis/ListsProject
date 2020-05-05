@@ -1,8 +1,12 @@
 from django.test import TestCase
+from django.urls import resolve
+from todolists.views import home_page
 
-class SmokeTest(TestCase):
-    '''smoke unit tests'''
+class HomePageTest(TestCase):
+    '''unit tests for main page'''
 
-    def test_bad_maths(self):
+    def test_root_url_resolves_to_home_page_view(self):
         '''sample test'''
-        self.assertEqual(2 * 2, 5)
+        found = resolve('/')
+        self.assertEqual(found.func, home_page)
+
