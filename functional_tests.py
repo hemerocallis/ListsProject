@@ -36,7 +36,8 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element(By.CSS_SELECTOR, '#id_list_table')
         rows = table.find_elements(By.TAG_NAME, 'tr')
-        self.assertTrue(any(row.text == '1: Learn TDD' for row in rows))
+        self.assertTrue(any(row.text == '1: Learn TDD' for row in rows),\
+        "New item is not shown in the table")
 
         # user still can see offer to enter list item
 
