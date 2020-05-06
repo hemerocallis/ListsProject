@@ -36,12 +36,20 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element(By.CSS_SELECTOR, '#id_list_table')
         rows = table.find_elements(By.TAG_NAME, 'tr')
-        self.assertTrue(any(row.text == '1: Learn TDD' for row in rows),\
-        "New item is not shown in the table")
+        self.assertIn('1: Learn TDD', [row.text for row in rows])
 
         # user still can see offer to enter list item
+        inputbox = self.browser.find_element(By.CSS_SELECTOR, '#id_new_item')
 
         # user can create the second list item and see result list
+        inputbox.send_keys('Create pet-project')
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(3)
+
+        table = self.browser.find_element(By.CSS_SELECTOR, '#id_list_table')
+        rows = table.find_elements(By.TAG_NAME, 'tr')
+        self.assertIn('1: Learn TDD', [row.text for row in rows])
+        self.assertIn('2: Create pet-project', [row.text for row in rows])
 
         # user can see text about unique URL address for the list
 
