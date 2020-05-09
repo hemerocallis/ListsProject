@@ -1,10 +1,10 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-import unittest
+from django.test import LiveServerTestCase
 import time
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
     '''new user test'''
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -20,7 +20,7 @@ class NewVisitorTest(unittest.TestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
         '''user starts to-do list'''
         # user opens our main page
-        self.browser.get('http://localhost:8000')
+        self.browser.get(self.live_server_url)
 
         # user can see correct page title and header
         self.assertIn('To-Do', self.browser.title)
