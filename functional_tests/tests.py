@@ -30,6 +30,30 @@ class NewVisitorTest(LiveServerTestCase):
                 time.sleep(0.5)
 
 
+    def test_layout_and_styling(self):
+        '''styles check'''
+        # user opens home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+
+        # user can see centered input field
+        inputbox = self.browser.find_element(By.CSS_SELECTOR, '#id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=10)
+
+        # user can start a new list and see centered input field on list page
+        inputbox.send_keys('testing')
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: testing')
+        inputbox = self.browser.find_element(By.CSS_SELECTOR, '#id_new_item')
+        self.assertAlmostEqual(
+            inputbox.location['x'] + inputbox.size['width'] / 2,
+            512,
+            delta=10)
+
+
     def test_can_start_a_list_for_one_user(self):
         '''user starts to-do list'''
         # user opens our main page
@@ -68,6 +92,7 @@ class NewVisitorTest(LiveServerTestCase):
         # user can open their unique URL address of the created to-do list
 
         self.fail('End the test!')
+
 
     def test_multiple_users_can_start_lists_at_different_urls(self):
         '''multiple users test'''
